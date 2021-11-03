@@ -1,6 +1,5 @@
 require("dotenv").config();
 const express = require("express");
-const fs = require("fs");
 const routes = require("./routes/users");
 const mongoose = require("mongoose");
 const helmet = require("helmet");

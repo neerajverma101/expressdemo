@@ -36,6 +36,8 @@ const getUser = (req, res, next) => {
 };
 
 const getAllUsers = (req, res, next) => {
+  //call 3rd party api
+
   if (req.query.db) {
     UserModel.find({}, (err, data) => {
       if (err) {

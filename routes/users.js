@@ -1,17 +1,19 @@
-const express=require("express")
+const express = require("express");
 
-const router=express.Router()
+const router = express.Router();
 
-const appController=require("../controllers/users.js")
+const appController = require("../controllers/users.js");
 
-router.get("/users",appController.getAllUsers)
+const checkAuth = require("../auth");
 
-router.get("/user/:username",appController.getUser)
+router.get("/users", appController.getAllUsers);
 
-router.post("/user/add",appController.addUser)
+router.get("/user/:username", appController.getUser);
 
-router.patch("/user/update/:username",appController.updateUser)
+router.post("/user/add", appController.addUser);
 
-router.delete("/user/delete/:username",appController.deleteUser)
+router.patch("/user/update/:username", appController.updateUser);
 
-module.exports=router
+router.delete("/user/delete/:username", appController.deleteUser);
+
+module.exports = router;

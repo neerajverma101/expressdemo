@@ -1,5 +1,7 @@
 const services = require("../services/app");
 
+const { generateAccessToken } = require("../auth");
+
 const handleResponse = (res, err, data) => {
   if (err) return res.json({ error: true, message: err });
   res.json(data);
@@ -34,10 +36,16 @@ const getReqRes = (req, res, next) => {
   services.getReqRes(url + keyword, {}, handleResponse.bind(this, res));
 };
 
+const getAccessToken = (req, res, next) => {
+  const token = generateAccessToken({ username: req.body.username });
+  res.json(token);
+};
+
 module.exports = {
   getPopularMovies,
   searchMovies,
   searchWeather,
   searchRepos,
   getReqRes,
+  getAccessToken,
 };

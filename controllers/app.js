@@ -41,6 +41,44 @@ const getAccessToken = (req, res, next) => {
   res.json(token);
 };
 
+const getCrudResourceData = (req, res) => {
+  const { resource, id } = req.params;
+  let url = "https://jsonplaceholder.typicode.com/" + resource;
+  if (id) url = url.concat("/" + id);
+  services.getCrudResourceData(url, handleResponse.bind(this, res));
+};
+
+const addCrudResourceData = (req, res) => {
+  const {
+    body,
+    params: { resource },
+  } = req;
+  const url = "https://jsonplaceholder.typicode.com/" + resource;
+  services.addCrudResourceData(url, body, handleResponse.bind(this, res));
+};
+
+const updateCrudResourceData = (req, res) => {
+  const {
+    body,
+    params: { resource, id },
+  } = req;
+  const url = "https://jsonplaceholder.typicode.com/" + resource + "/" + id;
+  services.updateCrudResourceData(url, body, handleResponse.bind(this, res));
+};
+
+const deleteCrudResourceData = (req, res) => {
+  const { id, resource } = req.params;
+  const url = "https://jsonplaceholder.typicode.com/" + resource + "/" + id;
+  services.deleteCrudResourceData(url, handleResponse.bind(this, res));
+};
+
+const getPosts = (req, res) => {
+  const { id } = req.params;
+  const url = "https://jsonplaceholder.typicode.com/posts";
+  if (id) url = url.concat("/" + id);
+  services.getPosts(url, handleResponse.bind(this, res));
+};
+
 module.exports = {
   getPopularMovies,
   searchMovies,
@@ -48,4 +86,9 @@ module.exports = {
   searchRepos,
   getReqRes,
   getAccessToken,
+  getCrudResourceData,
+  addCrudResourceData,
+  updateCrudResourceData,
+  deleteCrudResourceData,
+  getPosts,
 };

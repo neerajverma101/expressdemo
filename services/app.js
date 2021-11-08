@@ -1,4 +1,5 @@
 const axios = require("axios");
+const https = require("https");
 
 const getReqRes = (url, { method, data, params }, callback) => {
   const options = { url, method: method || "get" };
@@ -61,10 +62,58 @@ const searchRepos = (url, keyword, callback) => {
     .catch((err) => callback(err.message));
 };
 
+const getCrudResourceData = (url, callback) => {
+  axios
+    .get(url)
+    .then((response) => callback(null, response.data))
+    .catch((err) => callback(err.message));
+};
+
+const addCrudResourceData = (url, data, callback) => {
+  axios
+    .post(url, data)
+    .then((response) => callback(null, response.data))
+    .catch((err) => callback(err.message));
+};
+
+const updateCrudResourceData = (url, data, callback) => {
+  axios
+    .patch(url, data)
+    .then((response) => callback(null, response.data))
+    .catch((err) => callback(err.message));
+};
+
+const deleteCrudResourceData = (url, callback) => {
+  axios
+    .delete(url)
+    .then((response) => callback(null, response.data))
+    .catch((err) => callback(err.message));
+};
+
+const getPosts = (url, callback) => {
+  https
+    .get(url, (res) => {
+      let data = [];
+      res.on("data", (chunk) => {
+        data.push(chunk);
+      });
+      res.on("end", () => {
+        const jsonData = JSON.parse(Buffer.concat(data).toString());
+        callback(null, jsonData);
+      });
+    })
+    .on("error", (err) => callback(err.message));
+};
+
 module.exports = {
   getPopularMovies,
   searchMovies,
   searchWeather,
   searchRepos,
   getReqRes,
+  getCrudResourceData,
+  addCrudResourceData,
+  updateCrudResourceData,
+  deleteCrudResourceData,
+  getPosts,
 };

@@ -10,8 +10,8 @@ app.use(express.json());
 app.use("/", routes);
 app.route("/").get((req, res, next) => {
   res.sendFile(process.cwd() + "/public/index.html");
-  next();
 });
+
 app.use((error, req, res, next) => {
   console.log("Error Handling Middleware called");
   console.log("Path: ", req.path, error);

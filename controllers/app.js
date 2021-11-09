@@ -74,9 +74,17 @@ const deleteCrudResourceData = (req, res) => {
 
 const getPosts = (req, res) => {
   const { id } = req.params;
-  const url = "https://jsonplaceholder.typicode.com/posts";
+  let url = "https://jsonplaceholder.typicode.com/posts";
   if (id) url = url.concat("/" + id);
   services.getPosts(url, handleResponse.bind(this, res));
+};
+
+const handleError = (req, res, next) => {
+  setTimeout(() => {
+    console.log("request time out");
+    const err = new Error("Request Error!");
+    next(err);
+  }, 1000);
 };
 
 module.exports = {
@@ -91,4 +99,5 @@ module.exports = {
   updateCrudResourceData,
   deleteCrudResourceData,
   getPosts,
+  handleError,
 };

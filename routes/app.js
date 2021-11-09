@@ -40,4 +40,6 @@ router.get("/posts/", routeController.getPosts);
 
 router.get("/posts/:id", routeController.getPosts);
 
+router.get("/error", routeController.handleError);
+
 module.exports = router;

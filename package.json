@@ -13,12 +13,19 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^3.2.2",
     "axios": "^0.24.0",
     "compression": "^1.7.4",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-validator": "^6.13.0",
     "helmet": "^4.6.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.0.12"
+    "mongoose": "^6.0.12",
+    "request": "^2.88.2",
+    "user-agents": "^1.0.838"
+  },
+  "devDependencies": {
+    "eslint": "^8.2.0"
   }
 }

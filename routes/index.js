@@ -18,7 +18,7 @@ router.get("/search/weather/:keyword", routeController.searchWeather);
 router.get("/search/repos/:keyword", routeController.searchRepos);
 
 router.get("/services", (req, res) =>
-  res.json({ services: Object.keys(routeController) })
+  res.json({ services: [...Object.keys(routeController), ...Object.keys(fileUploadController)] })
 );
 
 router.post("/token", routeController.getAccessToken);

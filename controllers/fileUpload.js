@@ -38,7 +38,7 @@ const getFilesList = (req, res) => {
     }
 
     let filesList = [];
-    const URL = `http://localhost:4000/files/`;
+    const URL = req.get('host') + `/files/`;
 
     files.forEach((file) => {
       filesList.push({

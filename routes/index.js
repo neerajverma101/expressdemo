@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const routeController = require("../controllers/index.js");
-const checkAuth = require("../auth");
-const validate = require("../controllers/validate");
+const checkAuth = require("../middleware/auth");
+const validate = require("../middleware/validate");
+const fileUploadController = require("../controllers/fileUpload");
 
 router.get(
   "/popular/movies",
@@ -30,9 +31,9 @@ router.get("/users/:id", routeController.getUsers);
 
 router.get("/posts/:id", routeController.getPosts);
 
-router.post("/users", validate.users, routeController.addUser);
+router.post("/users", validate.addUser, routeController.addUser);
 
-router.post("/posts", validate.posts, routeController.addPost);
+router.post("/posts", validate.addPost, routeController.addPost);
 
 router.patch("/users/:id", routeController.updateUser);
 
@@ -49,5 +50,11 @@ router.get("/user-posts/:id", routeController.getUserPosts);
 router.get("/related/:keyword", routeController.getRelated);
 
 router.get("/movie-details/:keyword", routeController.getMovieDetails);
+
+router.post("/upload-file", fileUploadController.uploadFile);
+
+router.get("/files", fileUploadController.getFilesList);
+
+router.get("/files/:name", fileUploadController.downloadFiles);
 
 module.exports = router;

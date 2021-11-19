@@ -1,5 +1,5 @@
 const async = require("async");
-const restClient = require("../restClient");
+const restClient = require(".");
 
 const asyncRequest = (apisList, callback, mode = "parallel") => {
   let apis;

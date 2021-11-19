@@ -1,5 +1,6 @@
 const services = require("../services");
-const { generateAccessToken } = require("../auth");
+const { generateAccessToken } = require("../middleware/auth");
+const { validationResult } = require("express-validator");
 
 const responseHandler = (res, err, data) => {
   if (err) {
@@ -49,23 +50,25 @@ const getAccessToken = (req, res) => {
 };
 
 const addUser = (req, res) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   res.status(422).json({ errors: errors.array() });
-  //   return;
-  // }
-  const { body } = req;
-  services.addUsers(body, responseHandler.bind(this, res));
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(400).json({ errors: errors.array() });
+  } else {
+    const { body } = req;
+    services.addUser(body, responseHandler.bind(this, res));
+  }
+
 };
 
 const addPost = (req, res) => {
-  // const errors = validationResult(req);
-  // if (!errors.isEmpty()) {
-  //   res.status(422).json({ errors: errors.array() });
-  //   return;
-  // }
-  const { body } = req;
-  services.addPosts(body, responseHandler.bind(this, res));
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    res.status(422).json({ errors: errors.array() });
+
+  } else {
+    const { body } = req;
+    services.addPost(body, responseHandler.bind(this, res));
+  }
 };
 
 const updateUser = (req, res) => {

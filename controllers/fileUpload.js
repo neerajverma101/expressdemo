@@ -1,10 +1,10 @@
-const fileUploadMiddleware = require("../middleware/fileUpload");
+const fileUploader = require("../middleware/fileUpload");
 
 const fs = require("fs");
 
 const uploadFile = async (req, res) => {
   try {
-    await fileUploadMiddleware(req, res);
+    await fileUploader(req, res);
     if (req.files === undefined) {
       res.status(400).json({ error: true, message: "Choose a file to upload" });
     } else {
@@ -32,22 +32,15 @@ const getFilesList = (req, res) => {
   const path = __basedir + "/public/uploads/";
   fs.readdir(path, function (err, files) {
     if (err) {
-      res.status(500).send({
-        message: "Files not found.",
+      res.status(500).json({
+        error: true,
+        message: "files not found.",
       });
     }
 
-    let filesList = [];
     const URL = req.protocol + '://' + req.get('host') + req.originalUrl + "/"
-
-    files.forEach((file) => {
-      filesList.push({
-        name: file,
-        url: URL + file,
-      });
-    });
-
-    res.status(200).send(filesList);
+    const filesList = files.map(file => ({ name: file, url: URL + file }))
+    res.status(200).json({ error: false, files: filesList });
   });
 };
 
@@ -57,8 +50,9 @@ const downloadFiles = (req, res) => {
 
   res.download(path + fileName, (err) => {
     if (err) {
-      res.status(500).send({
-        message: "File can not be downloaded: " + err,
+      res.status(500).json({
+        error: true,
+        message: "file can not be downloaded: " + err,
       });
     }
   });

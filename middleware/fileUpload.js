@@ -8,18 +8,18 @@ const storage = multer.diskStorage({
     cb(null, directory);
   },
   filename: (req, file, cb) => {
-    const fileName =
-      Date.now() +
-      "-" +
-      Math.round(Math.random() * 1e9) +
-      getFileExtension(file.originalname);
-    cb(null, fileName);
+    cb(null, getFileName(file));
   },
 });
 
-const getFileExtension = (file) => {
-  return "." + file.split(".").pop().toLocaleLowerCase();
-};
+const getFileName = (file, random = false) => {
+  if (random) {
+    return (Date.now() + "-" + Math.round(Math.random() * 1e9) + "." + file.originalname.split(".").pop()).toLocaleLowerCase()
+  }
+  else {
+    return file.originalname.split(" ").join("_").toLocaleLowerCase()
+  }
+}
 
 const upload = multer({
   storage,
